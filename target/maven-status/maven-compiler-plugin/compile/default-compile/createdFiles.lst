@@ -1,0 +1,4 @@
+com\mkyong\SpringBootConsoleApplication.class
+com\mkyong\dao\CustomerRepository.class
+com\mkyong\JDBCTestClass.class
+com\mkyong\AppConfig.class

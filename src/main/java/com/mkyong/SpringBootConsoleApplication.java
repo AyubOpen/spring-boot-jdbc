@@ -1,16 +1,20 @@
 package com.mkyong;
 
 import com.mkyong.dao.CustomerRepository;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import javax.sql.DataSource;
 import java.util.List;
 
 import static java.lang.System.exit;
 
+@EnableAutoConfiguration
 @SpringBootApplication
 public class SpringBootConsoleApplication implements CommandLineRunner {
 
@@ -20,18 +24,21 @@ public class SpringBootConsoleApplication implements CommandLineRunner {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     public static void main(String[] args) throws Exception {
         SpringApplication.run(SpringBootConsoleApplication.class, args);
     }
 
     @Override
     public void run(String... args) throws Exception {
-
-        System.out.println("DATASOURCE = " + dataSource);
-
-        // If you want to check the HikariDataSource settings
-        //HikariDataSource newds = (HikariDataSource)dataSource;
-        //System.out.println("DATASOURCE = " + newds.getMaximumPoolSize());
+        // If you want to check the HikariDataSource settingsjav
+        HikariDataSource newds = (HikariDataSource)dataSource;
+        System.out.println("getMaximumPoolSize = " + ((HikariDataSource) dataSource).getDataSourceProperties());
+       // newds.getDataSourceProperties().put("useUnicode","yes");
+     //   newds.getDataSourceProperties().put("characterEncoding","UTF-8");
+     //   System.out.println("DATASOURCE = " + newds.getDataSourceProperties().getProperty("hikari.useUnicode"));
 
         if (args.length <= 0) {
             System.err.println("[Usage] java xxx.jar {display}");
